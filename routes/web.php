@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\V1\Book\BookController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+// Library index page
+Route::get('/', [BookController::class, 'index'])->name('index');

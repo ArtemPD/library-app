@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Contracts\Interfaces\UserInterface;
 use App\Models\Book;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
@@ -12,56 +13,62 @@ class BookPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(Authenticatable $user): bool
+    public function viewAny(UserInterface $user): bool
     {
         //
     }
+
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(Authenticatable $user, Book $book): bool
+    public function view(UserInterface $user, Book $book): bool
     {
-        return true;
+        return $user->isPublisher() && $book->publisher->is($user);
     }
+
 
     /**
      * Determine whether the user can create models.
      */
-    public function create(Authenticatable $user): bool
+    public function create(UserInterface $user): bool
     {
-        //
+        return $user->isPublisher();
     }
+
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(Authenticatable $user, Book $book): bool
+    public function update(UserInterface $user, Book $book): bool
     {
-        //
+        return $user->isPublisher() && $book->publisher->is($user);
     }
+
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(Authenticatable $user, Book $book): bool
+    public function delete(UserInterface $user, Book $book): bool
     {
-        //
+        return $user->isPublisher() && $book->publisher->is($user);
     }
+
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(Authenticatable $user, Book $book): bool
+    public function restore(UserInterface $user, Book $book): bool
     {
-        //
+        return $user->isPublisher() && $book->publisher->is($user);
     }
+
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(Authenticatable $user, Book $book): bool
+    public function forceDelete(UserInterface $user, Book $book): bool
     {
-        //
+        return $user->isPublisher() && $book->publisher->is($user);
     }
 }

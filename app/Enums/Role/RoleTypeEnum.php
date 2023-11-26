@@ -10,6 +10,6 @@ enum RoleTypeEnum: string
 {
     use Values, Names, InvokableCases;
 
-    case STUDENT = 'student';
+    case PUBLISHER = 'publisher';
 
 }
