@@ -81,6 +81,7 @@ class PublisherBookController extends Controller
      * @return JsonResponse
      * @throws AuthorizationException
      */
+    #[ResponseFromApiResource(PublisherBookDetailResource::class, Book::class, 200, '', true)]
     public function store(PublisherBookStoreRequest $request): JsonResponse
     {
         $this->authorize('create', Book::class);
@@ -118,6 +119,7 @@ class PublisherBookController extends Controller
      * @return JsonResponse
      * @throws AuthorizationException
      */
+    #[ResponseFromApiResource(PublisherBookDetailResource::class, Book::class, 200, '', true)]
     public function update(PublisherBookStoreRequest $request, Book $book): JsonResponse
     {
         $this->authorize('update', $book);
