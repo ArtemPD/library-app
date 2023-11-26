@@ -2,14 +2,14 @@
 
 namespace Database\Factories;
 
-use App\Models\Book;
 use App\Models\Publisher;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
 
 /**
- * @extends Factory<Book>
+ * @extends Factory<Publisher>
  */
-class BookFactory extends Factory
+class PublisherFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -21,7 +21,10 @@ class BookFactory extends Factory
         return [
             'title' => fake()->word,
             'description' => fake()->sentence,
-            'publisher_id' => Publisher::factory(),
+            'email' => fake()->unique()->safeEmail(),
+            'phone' => fake()->e164PhoneNumber(),
+            'password' => Hash::make('password'), // password
+            'email_verified_at' => now(),
         ];
     }
 }

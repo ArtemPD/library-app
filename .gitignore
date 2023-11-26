@@ -7,7 +7,6 @@
 /vendor
 .scribe
 /public/docs
-.env
 .env.backup
 .env.production
 .phpunit.result.cache

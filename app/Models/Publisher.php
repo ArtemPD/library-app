@@ -3,18 +3,22 @@
 namespace App\Models;
 
 use App\Casts\Phone;
+use App\Contracts\Interfaces\HasBooksInterface;
 use App\Contracts\Interfaces\HasPhoneInterface;
+use App\Contracts\Interfaces\UserInterface;
+use App\Contracts\Traits\HasBooks;
 use App\Contracts\Traits\HasPhone;
+use App\Contracts\Traits\ModelName;
+use App\Contracts\Traits\UserTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class Author extends Authenticatable implements MustVerifyEmail, HasPhoneInterface
+class Publisher extends Authenticatable implements MustVerifyEmail, HasPhoneInterface, HasBooksInterface, UserInterface
 {
-    use HasFactory, HasApiTokens, Notifiable, HasPhone;
+    use HasFactory, HasApiTokens, Notifiable, HasPhone, HasBooks, ModelName, UserTrait;
 
 
     /**
@@ -23,8 +27,8 @@ class Author extends Authenticatable implements MustVerifyEmail, HasPhoneInterfa
      * @var array<int, string>
      */
     protected $fillable = [
-        'first_name',
-        'last_name',
+        'title',
+        'description',
         'email',
         'phone'
     ];
@@ -36,19 +40,10 @@ class Author extends Authenticatable implements MustVerifyEmail, HasPhoneInterfa
      * @var array<string, string>
      */
     protected $casts = [
-        'first_name' => 'string',
-        'last_name' => 'string',
+        'title' => 'string',
+        'description' => 'string',
         'email' => 'string',
         'email_verified_at' => 'datetime',
         'phone' => Phone::class,
     ];
-
-
-    /**
-     * @return BelongsToMany
-     */
-    public function books(): BelongsToMany
-    {
-        return $this->belongsToMany(Book::class, 'author_book', 'author_id', 'book_id')->withTimestamps();
-    }
 }
